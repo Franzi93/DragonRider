@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 using System.Diagnostics;
 
-//using System.IO;
+using System.IO;
 //using System.IO.Pipes;
 //using System.Linq;
 //using System.Text;
@@ -12,9 +11,26 @@ using System.Diagnostics;
 public class BalanceBoardScript : MonoBehaviour
 {
 
+    public float deadzone;
+
     // Use this for initialization
     void Start()
     {
+
+        //try
+        //{
+        foreach(Process proc in Process.GetProcessesByName("WiiBalanceWalker"))
+            {
+                proc.Kill();
+                UnityEngine.Debug.Log("PROZESS GEKILLT!");
+            }
+        //}
+        //catch(Exception ex)
+        //{
+        //    MessageBox.Show(ex.Message);
+        //}
+
+
         startExternalApplication(@"D:\Dragonfly\WiiBalanceWalker_v0.4\WiiBalanceWalker_v0.4\WiiBalanceWalker\bin\Debug\WiiBalanceWalker.exe");
     }
 
@@ -27,37 +43,53 @@ public class BalanceBoardScript : MonoBehaviour
             this.gameObject.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         }
 
-        string weight = System.IO.File.ReadAllText(@"D:\rwWT.txt");
-        float weightFloat = float.Parse(weight);
 
-        string tl = System.IO.File.ReadAllText(@"D:\rwTL.txt");
-        float tlFloat = float.Parse(tl);
+         try
+         {
+             string weight = System.IO.File.ReadAllText(@"D:\rwWT.txt");
+             float weightFloat = float.Parse(weight);
 
-        string bl = System.IO.File.ReadAllText(@"D:\rwBL.txt");
-        float blFloat = float.Parse(bl);
+             string tl = System.IO.File.ReadAllText(@"D:\rwTL.txt");
+             float tlFloat = float.Parse(tl);
 
-        string tr = System.IO.File.ReadAllText(@"D:\rwTR.txt");
-        float trFloat = float.Parse(tr);
+             string bl = System.IO.File.ReadAllText(@"D:\rwBL.txt");
+             float blFloat = float.Parse(bl);
 
-        string br = System.IO.File.ReadAllText(@"D:\rwBR.txt");
-        float brFloat = float.Parse(br);
+             string tr = System.IO.File.ReadAllText(@"D:\rwTR.txt");
+             float trFloat = float.Parse(tr);
 
-        weightFloat = tlFloat + trFloat + blFloat + brFloat;
+             string br = System.IO.File.ReadAllText(@"D:\rwBR.txt");
+             float brFloat = float.Parse(br);
 
-        float tlpercent = tlFloat / weightFloat;
-        float trpercent = trFloat / weightFloat;
-        float blpercent = blFloat / weightFloat;
-        float brpercent = brFloat / weightFloat;
+             weightFloat = tlFloat + trFloat + blFloat + brFloat;
+
+             float tlpercent = tlFloat / weightFloat;
+             float trpercent = trFloat / weightFloat;
+             float blpercent = blFloat / weightFloat;
+             float brpercent = brFloat / weightFloat;
 
 
-        float horizontal = ((trpercent + brpercent) / 2) - ((tlpercent + blpercent) / 2);
-        float vertical = ((trpercent + tlpercent) / 2) - ((brpercent + blpercent) / 2);
+             float horizontal = ((trpercent + brpercent) / 2) - ((tlpercent + blpercent) / 2);
+             float vertical = ((trpercent + tlpercent) / 2) - ((brpercent + blpercent) / 2);
 
-        
+             if(horizontal < deadzone && horizontal > -deadzone)
+             {
+                 horizontal = 0.0f;
+             }
+             if(vertical < deadzone && vertical > -deadzone)
+             {
+                 vertical = 0.0f;
+             }
+             // float horizontal2 = ((((trFloat + brFloat) - (tlFloat + blFloat)) / 2) / ((tlFloat + trFloat + blFloat + brFloat) / 4)) / 2;
 
-        float horizontal2 = ((((trFloat + brFloat) - (tlFloat + blFloat)) / 2) / ((tlFloat + trFloat + blFloat + brFloat) / 4)) / 2;
+             this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x + horizontal * 0.4f, this.gameObject.transform.position.y, this.gameObject.transform.position.z + vertical * 0.4f);
+         }
+         catch(IOException e)
+         {
 
-        this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x + horizontal * 0.3f, this.gameObject.transform.position.y, this.gameObject.transform.position.z + vertical * 0.3f);
+         }
+
+
 
     }
 

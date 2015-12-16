@@ -63,7 +63,7 @@ public class CubeScript : MonoBehaviour
     void Update()
     {
 
-        
+
         if(Input.GetKeyDown(KeyCode.Return))
         {
             Debug.Log("reset");
@@ -143,41 +143,7 @@ public class CubeScript : MonoBehaviour
                         _Data[idx].Joints[JointType.ShoulderLeft].Position.Y,
                         _Data[idx].Joints[JointType.ShoulderLeft].Position.Z);
 
-                        //if (leanBackward())
-                        //{
-                        //    moveDown();
-                        //}
-
-                        //if (leanForward())
-                        //{
-                        //    moveUp();
-                        //}
-
-
-                        //if (leanLeft())
-                        //{
-                        //    moveLeft();
-                        //}
-
-                        //if (leanRight())
-                        //{
-                        //    moveRight();
-                        //}
-
-                        //if (pull())
-                        //{
-                        //    moveBackward();
-                        //}
-
-                        //if (shakeHands())
-                        //{
-                        //    moveForward();
-                        //}
-
                     }
-
-
-
                 }
 
             }
@@ -228,35 +194,6 @@ public class CubeScript : MonoBehaviour
         return Input.GetKeyDown(KeyCode.S);
     }
 
-    void init(int idx)
-    {
-        initialspinebase = new Vector3(_Data[idx].Joints[JointType.SpineBase].Position.X,
-                        _Data[idx].Joints[JointType.SpineBase].Position.Y,
-                        _Data[idx].Joints[JointType.SpineBase].Position.Z);
-
-        initialspineshoulder = new Vector3(_Data[idx].Joints[JointType.SpineShoulder].Position.X,
-            _Data[idx].Joints[JointType.SpineShoulder].Position.Y,
-            _Data[idx].Joints[JointType.SpineShoulder].Position.Z);
-
-        initialelbowleft = new Vector3(_Data[idx].Joints[JointType.ElbowLeft].Position.X,
-            _Data[idx].Joints[JointType.ElbowLeft].Position.Y,
-            _Data[idx].Joints[JointType.ElbowLeft].Position.Z);
-
-        initialelbowright = new Vector3(_Data[idx].Joints[JointType.ElbowRight].Position.X,
-            _Data[idx].Joints[JointType.ElbowRight].Position.Y,
-            _Data[idx].Joints[JointType.ElbowRight].Position.Z);
-
-        initialshoulderright = new Vector3(_Data[idx].Joints[JointType.ShoulderRight].Position.X,
-            _Data[idx].Joints[JointType.ShoulderRight].Position.Y,
-            _Data[idx].Joints[JointType.ShoulderRight].Position.Z);
-
-        initialshoulderleft = new Vector3(_Data[idx].Joints[JointType.ShoulderLeft].Position.X,
-        _Data[idx].Joints[JointType.ShoulderLeft].Position.Y,
-        _Data[idx].Joints[JointType.ShoulderLeft].Position.Z);
-
-        initialized = true;
-
-    }
 
     void moveUp()
     {
@@ -355,6 +292,36 @@ public class CubeScript : MonoBehaviour
         {
             this.gameObject.transform.Rotate(Vector3.down, val * 5);
         }
+    }
+
+    void init(int idx)
+    {
+        initialspinebase = new Vector3(_Data[idx].Joints[JointType.SpineBase].Position.X,
+                        _Data[idx].Joints[JointType.SpineBase].Position.Y,
+                        _Data[idx].Joints[JointType.SpineBase].Position.Z);
+
+        initialspineshoulder = new Vector3(_Data[idx].Joints[JointType.SpineShoulder].Position.X,
+                        _Data[idx].Joints[JointType.SpineShoulder].Position.Y,
+                        _Data[idx].Joints[JointType.SpineShoulder].Position.Z);
+
+        initialelbowleft = new Vector3(_Data[idx].Joints[JointType.ElbowLeft].Position.X,
+                        _Data[idx].Joints[JointType.ElbowLeft].Position.Y,
+                        _Data[idx].Joints[JointType.ElbowLeft].Position.Z);
+
+        initialelbowright = new Vector3(_Data[idx].Joints[JointType.ElbowRight].Position.X,
+                        _Data[idx].Joints[JointType.ElbowRight].Position.Y,
+                        _Data[idx].Joints[JointType.ElbowRight].Position.Z);
+
+        initialshoulderright = new Vector3(_Data[idx].Joints[JointType.ShoulderRight].Position.X,
+                        _Data[idx].Joints[JointType.ShoulderRight].Position.Y,
+                        _Data[idx].Joints[JointType.ShoulderRight].Position.Z);
+
+        initialshoulderleft = new Vector3(_Data[idx].Joints[JointType.ShoulderLeft].Position.X,
+                        _Data[idx].Joints[JointType.ShoulderLeft].Position.Y,
+                        _Data[idx].Joints[JointType.ShoulderLeft].Position.Z);
+
+        initialized = true;
+
     }
 
 }
